@@ -1,33 +1,41 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODECAR — Generator</title>
+<title>CODECAR — Automotive Code Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 2rem; gap: 1.5rem; }
   .card { background: #ffffff; border: 1.5px solid #e5e7eb; border-radius: 20px; width: 100%; max-width: 480px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.08); }
-  .header { background: #ffffff; padding: 1.5rem 2rem 1.2rem; display: flex; flex-direction: column; align-items: center; gap: 8px; border-bottom: 1px solid #f0f0f0; }
-  .brand-name { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 700; color: #0d1b2e; letter-spacing: 4px; }
+  .header { padding: 1.8rem 2rem 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 8px; border-bottom: 1px solid #f0f0f0; }
+  .brand-name { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 700; color: #0d1b2e; letter-spacing: 5px; }
   .brand-sub { font-size: 10px; letter-spacing: 4px; color: #9ca3af; font-weight: 500; margin-top: -4px; }
-  .divider { width: 100%; height: 1px; background: #f3f4f6; margin: 4px 0; }
+  .divider { width: 100%; height: 1px; background: #f3f4f6; margin: 6px 0; }
   .contact-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; }
-  .section-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; padding: 10px 2rem 0; }
-  .body { padding: 1rem 2rem 1.5rem; }
+  .body { padding: 1.4rem 2rem 1.8rem; }
+  .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.4rem; }
+  .model-btn { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.18s; }
+  .model-btn:hover { border-color: #7b6cf6; background: #f5f3ff; }
+  .model-btn.active { border-color: #7b6cf6; background: #f5f3ff; }
+  .model-btn .car-brand { font-size: 10px; color: #9ca3af; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .model-btn .car-model { font-size: 15px; color: #0d1b2e; font-weight: 600; }
+  .model-btn.active .car-model { color: #7b6cf6; }
+  .gen-panel { display: none; }
+  .gen-panel.active { display: block; }
+  .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6; }
   .field-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; font-weight: 500; }
-  .vin-row { display: flex; gap: 10px; margin-bottom: 1rem; }
-  .vin-row input, .sel-row select { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
-  .vin-row input { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
-  .vin-row input:focus, .sel-row select:focus { border-color: #7b6cf6; }
-  .vin-row input::placeholder { color: #c0c4cc; letter-spacing: 0; font-family: 'Inter', sans-serif; font-size: 13px; }
+  .input-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+  .input-row input, .sel-wrap select { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
+  .input-row input { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .input-row input:focus, .sel-wrap select:focus { border-color: #7b6cf6; }
+  .input-row input::placeholder { color: #c0c4cc; letter-spacing: 0; font-family: 'Inter', sans-serif; font-size: 13px; }
   .btn { background: #0d1b2e; color: #ffffff; border: none; border-radius: 10px; padding: 0 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif; transition: background 0.2s; display: flex; align-items: center; gap: 6px; min-height: 42px; }
   .btn:hover { background: #1a2e48; }
+  .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .sel-row { display: flex; gap: 10px; margin-bottom: 1rem; }
-  .sel-row select { flex: 1; }
-  .btn-full { width: 100%; justify-content: center; margin-top: 4px; min-height: 44px; font-size: 14px; }
+  .sel-wrap { margin-bottom: 1rem; }
   .results { display: none; flex-direction: column; gap: 10px; margin-top: 1rem; }
   .results.visible { display: flex; }
   .key-card { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 16px; }
@@ -51,8 +59,6 @@
 </style>
 </head>
 <body>
-
-<!-- CHANGAN UNI-Z -->
 <div class="card">
   <div class="header">
     <svg width="72" height="50" viewBox="0 0 80 56" fill="none">
@@ -72,166 +78,158 @@
       <span>+994 70 730 77 77</span>
     </div>
   </div>
-
-  <div class="section-title">Changan UNI-Z — ADB Keygen</div>
   <div class="body">
-    <div class="field-label">VIN nömrəsi (min. 6 simvol)</div>
-    <div class="vin-row">
-      <input type="text" id="vinInput1" placeholder="Məs: WBA3A5G59..." maxlength="17" />
-      <button class="btn" id="genBtn1" onclick="generateUniz()">🔑 Açar al</button>
-    </div>
-    <div class="error-msg" id="errMsg1"></div>
-    <div class="results" id="results1">
-      <div class="key-card">
-        <div class="kc-label"><span class="dot dot-green"></span> Cari açar</div>
-        <div class="kc-value" id="currentKey">—</div>
-        <button class="copy-btn" id="cb1" onclick="copyVal('currentKey','cb1')">📋 Kopyala</button>
+    <div class="field-label">Select your vehicle model</div>
+    <div class="model-grid">
+      <div class="model-btn" onclick="selectModel('uniz',this)">
+        <div class="car-brand">Changan</div>
+        <div class="car-model">UNI-Z</div>
       </div>
-      <div class="key-card">
-        <div class="kc-label"><span class="dot dot-yellow"></span> Əvvəlki açar</div>
-        <div class="kc-value" id="prevKey">—</div>
-        <button class="copy-btn" id="cb2" onclick="copyVal('prevKey','cb2')">📋 Kopyala</button>
+      <div class="model-btn" onclick="selectModel('s07',this)">
+        <div class="car-brand">Deepal</div>
+        <div class="car-model">S07</div>
+      </div>
+      <div class="model-btn" onclick="selectModel('sl03',this)">
+        <div class="car-brand">Deepal</div>
+        <div class="car-model">SL03</div>
+      </div>
+      <div class="model-btn" onclick="selectModel('s07_2026',this)">
+        <div class="car-brand">Deepal</div>
+        <div class="car-model">S07 2026</div>
+      </div>
+    </div>
+
+    <div class="gen-panel" id="panel-uniz">
+      <div class="panel-title">Changan UNI-Z — ADB Key Generator</div>
+      <div class="field-label">Enter VIN (min. 6 characters)</div>
+      <div class="input-row">
+        <input type="text" id="vin1" placeholder="e.g. WBA3A5G59..." maxlength="17"/>
+        <button class="btn" id="btn1" onclick="generateUniz()">🔑 Get Key</button>
+      </div>
+      <div class="error-msg" id="err1"></div>
+      <div class="results" id="res1">
+        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Current key</div><div class="kc-value" id="k_current">—</div><button class="copy-btn" id="cp1" onclick="copyVal('k_current','cp1')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Previous key</div><div class="kc-value" id="k_prev">—</div><button class="copy-btn" id="cp2" onclick="copyVal('k_prev','cp2')">📋 Copy</button></div>
+      </div>
+    </div>
+
+    <div class="gen-panel" id="panel-s07">
+      <div class="panel-title">Deepal S07 — Access Code Generator</div>
+      <div class="field-label">Firmware version</div>
+      <div class="sel-wrap"><select id="ver_s07"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
+      <div class="field-label">Last 4 digits of VIN</div>
+      <div class="input-row">
+        <input type="text" id="vin2" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+        <button class="btn" id="btn2" onclick="generateDeepal('vin2','ver_s07','S07','res2','err2','btn2','d2')">🔑 Get Code</button>
+      </div>
+      <div class="error-msg" id="err2"></div>
+      <div class="results" id="res2">
+        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d2_y">—</div><button class="copy-btn" id="cp3" onclick="copyVal('d2_y','cp3')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d2_t">—</div><button class="copy-btn" id="cp4" onclick="copyVal('d2_t','cp4')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d2_tm">—</div><button class="copy-btn" id="cp5" onclick="copyVal('d2_tm','cp5')">📋 Copy</button></div>
+      </div>
+    </div>
+
+    <div class="gen-panel" id="panel-sl03">
+      <div class="panel-title">Deepal SL03 — Access Code Generator</div>
+      <div class="field-label">Firmware version</div>
+      <div class="sel-wrap"><select id="ver_sl03"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
+      <div class="field-label">Last 4 digits of VIN</div>
+      <div class="input-row">
+        <input type="text" id="vin3" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+        <button class="btn" id="btn3" onclick="generateDeepal('vin3','ver_sl03','SL03','res3','err3','btn3','d3')">🔑 Get Code</button>
+      </div>
+      <div class="error-msg" id="err3"></div>
+      <div class="results" id="res3">
+        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d3_y">—</div><button class="copy-btn" id="cp6" onclick="copyVal('d3_y','cp6')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d3_t">—</div><button class="copy-btn" id="cp7" onclick="copyVal('d3_t','cp7')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d3_tm">—</div><button class="copy-btn" id="cp8" onclick="copyVal('d3_tm','cp8')">📋 Copy</button></div>
+      </div>
+    </div>
+
+    <div class="gen-panel" id="panel-s07_2026">
+      <div class="panel-title">Deepal S07 2026 — Access Code Generator</div>
+      <input type="hidden" id="ver_s07_2026" value="3.1">
+      <div class="field-label">Last 4 digits of VIN</div>
+      <div class="input-row">
+        <input type="text" id="vin4" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+        <button class="btn" id="btn4" onclick="generateDeepal('vin4','ver_s07_2026','S07 2026','res4','err4','btn4','d4')">🔑 Get Code</button>
+      </div>
+      <div class="error-msg" id="err4"></div>
+      <div class="results" id="res4">
+        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d4_y">—</div><button class="copy-btn" id="cp9" onclick="copyVal('d4_y','cp9')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d4_t">—</div><button class="copy-btn" id="cp10" onclick="copyVal('d4_t','cp10')">📋 Copy</button></div>
+        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d4_tm">—</div><button class="copy-btn" id="cp11" onclick="copyVal('d4_tm','cp11')">📋 Copy</button></div>
       </div>
     </div>
   </div>
-
   <div class="footer">
-    <div class="footer-left">ADB Keygen · <span>CODECAR</span></div>
+    <div class="footer-left">Code Generator · <span>CODECAR</span></div>
     <div class="footer-right">codecar-nine.vercel.app</div>
   </div>
 </div>
-
-<!-- DEEPAL -->
-<div class="card">
-  <div class="header">
-    <svg width="72" height="50" viewBox="0 0 80 56" fill="none">
-      <path d="M38 6 C18 6 6 16 6 28 C6 40 18 50 38 50" stroke="url(#lg3)" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <path d="M42 6 C62 6 74 16 74 28 C74 40 62 50 42 50" stroke="url(#lg4)" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <line x1="40" y1="10" x2="40" y2="46" stroke="#e084a8" stroke-width="3.5" stroke-linecap="round"/>
-      <defs>
-        <linearGradient id="lg3" x1="6" y1="6" x2="38" y2="50" gradientUnits="userSpaceOnUse"><stop stop-color="#ff6b6b"/><stop offset="1" stop-color="#e84a5f"/></linearGradient>
-        <linearGradient id="lg4" x1="74" y1="6" x2="42" y2="50" gradientUnits="userSpaceOnUse"><stop stop-color="#9b8dff"/><stop offset="1" stop-color="#7b6cf6"/></linearGradient>
-      </defs>
-    </svg>
-    <div class="brand-name">CODECAR</div>
-    <div class="brand-sub">AUTOMOTIVE SOFTWARE</div>
-    <div class="divider"></div>
-    <div class="contact-row">
-      <svg width="13" height="13" fill="none" stroke="#7b6cf6" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 9.81a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 17z"/></svg>
-      <span>+994 70 730 77 77</span>
-    </div>
-  </div>
-
-  <div class="section-title">Deepal S07 / SL03 — Kod Generator</div>
-  <div class="body">
-    <div class="field-label">Versiya</div>
-    <div class="sel-row" style="margin-bottom:1rem;">
-      <select id="verSelect" onchange="toggleModel()">
-        <option value="3.1">3.1 və yuxarısı</option>
-        <option value="3.0">3.0 və aşağısı</option>
-      </select>
-    </div>
-    <div id="modelRow" style="margin-bottom:1rem;">
-      <div class="field-label">Model</div>
-      <div class="sel-row">
-        <select id="mdlSelect">
-          <option value="S07">S07</option>
-          <option value="SL03">SL03</option>
-          <option value="S07 2026">S07 2026</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-label">VIN-in son 4 rəqəmi</div>
-    <div class="vin-row">
-      <input type="text" id="vinInput2" placeholder="Məs: 3535" maxlength="4" inputmode="numeric" />
-      <button class="btn" id="genBtn2" onclick="generateDeepal()">🔑 Kod al</button>
-    </div>
-    <div class="error-msg" id="errMsg2"></div>
-    <div class="results" id="results2">
-      <div class="key-card">
-        <div class="kc-label"><span class="dot dot-yellow"></span> Dünən</div>
-        <div class="kc-value" id="d_yesterday">—</div>
-        <button class="copy-btn" id="cb3" onclick="copyVal('d_yesterday','cb3')">📋 Kopyala</button>
-      </div>
-      <div class="key-card">
-        <div class="kc-label"><span class="dot dot-green"></span> Bu gün</div>
-        <div class="kc-value" id="d_today">—</div>
-        <button class="copy-btn" id="cb4" onclick="copyVal('d_today','cb4')">📋 Kopyala</button>
-      </div>
-      <div class="key-card">
-        <div class="kc-label"><span class="dot dot-blue"></span> Sabah</div>
-        <div class="kc-value" id="d_tomorrow">—</div>
-        <button class="copy-btn" id="cb5" onclick="copyVal('d_tomorrow','cb5')">📋 Kopyala</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="footer-left">Kod Generator · <span>CODECAR</span></div>
-    <div class="footer-right">codecar-nine.vercel.app</div>
-  </div>
-</div>
-
 <script>
-function toggleModel() {
-  const ver = document.getElementById('verSelect').value;
-  document.getElementById('modelRow').style.display = ver === '3.1' ? 'block' : 'none';
+function selectModel(model, el) {
+  document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.gen-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + model).classList.add('active');
 }
-
 async function generateUniz() {
-  const vin = document.getElementById('vinInput1').value.trim().toUpperCase();
-  const btn = document.getElementById('genBtn1');
-  const err = document.getElementById('errMsg1');
-  const res = document.getElementById('results1');
+  const vin = document.getElementById('vin1').value.trim().toUpperCase();
+  const btn = document.getElementById('btn1');
+  const err = document.getElementById('err1');
+  const res = document.getElementById('res1');
   err.classList.remove('visible'); res.classList.remove('visible');
-  if (vin.length < 6) { err.textContent = 'VIN ən az 6 simvol olmalıdır.'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Yüklənir...';
+  if (vin.length < 6) { err.textContent = 'VIN must be at least 6 characters.'; err.classList.add('visible'); return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
   try {
     const r = await fetch(`/api/key?vin=${encodeURIComponent(vin)}`);
-    if (!r.ok) throw new Error('Server xətası: ' + r.status);
+    if (!r.ok) throw new Error('Server error: ' + r.status);
     const data = await r.json();
-    document.getElementById('currentKey').textContent = data.current || '—';
-    document.getElementById('prevKey').textContent = data.previous || '—';
+    document.getElementById('k_current').textContent = data.current || '—';
+    document.getElementById('k_prev').textContent = data.previous || '—';
     res.classList.add('visible');
-  } catch(e) { err.textContent = 'Xəta: ' + e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.innerHTML = '🔑 Açar al'; }
+  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
+  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Key'; }
 }
-
-async function generateDeepal() {
-  const vin = document.getElementById('vinInput2').value.trim();
-  const ver = document.getElementById('verSelect').value;
-  const mdl = document.getElementById('mdlSelect').value;
-  const btn = document.getElementById('genBtn2');
-  const err = document.getElementById('errMsg2');
-  const res = document.getElementById('results2');
+async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
+  const vin = document.getElementById(vinId).value.trim();
+  const ver = document.getElementById(verId).value;
+  const btn = document.getElementById(btnId);
+  const err = document.getElementById(errId);
+  const res = document.getElementById(resId);
   err.classList.remove('visible'); res.classList.remove('visible');
-  if (!/^\d{4}$/.test(vin)) { err.textContent = 'Düz 4 rəqəm daxil edin (0-9).'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Yüklənir...';
+  if (!/^\d{4}$/.test(vin)) { err.textContent = 'Please enter exactly 4 digits (0-9).'; err.classList.add('visible'); return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
   try {
-    const verParam = ver === '3.1' ? '3.1+' : '3.0';
-    const r = await fetch(`/api/deepal?vin=${encodeURIComponent(vin)}&ver=${encodeURIComponent(verParam)}&mdl=${encodeURIComponent(mdl)}`);
-    if (!r.ok) throw new Error('Server xətası: ' + r.status);
+    const r = await fetch(`/api/deepal?vin=${encodeURIComponent(vin)}&ver=${encodeURIComponent(ver)}&mdl=${encodeURIComponent(mdl)}`);
     const data = await r.json();
-    document.getElementById('d_yesterday').textContent = data.yesterday || data.вчера || '—';
-    document.getElementById('d_today').textContent = data.today || data.сегодня || '—';
-    document.getElementById('d_tomorrow').textContent = data.tomorrow || data.завтра || '—';
+    if (data.error) throw new Error(data.error);
+    let y, t, tm;
+    if (data.body) {
+      const p = JSON.parse(data.body);
+      y = p.codeYesterday; t = p.codeToday || p.code; tm = p.codeTomorrow;
+    } else {
+      y = data.yesterday; t = data.today; tm = data.tomorrow;
+    }
+    document.getElementById(prefix+'_y').textContent = y || '—';
+    document.getElementById(prefix+'_t').textContent = t || '—';
+    document.getElementById(prefix+'_tm').textContent = tm || '—';
     res.classList.add('visible');
-  } catch(e) { err.textContent = 'Xəta: ' + e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.innerHTML = '🔑 Kod al'; }
+  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
+  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Code'; }
 }
-
 function copyVal(id, btnId) {
   const val = document.getElementById(id).textContent;
   if (!val || val === '—') return;
   navigator.clipboard.writeText(val).then(() => {
     const b = document.getElementById(btnId);
-    b.textContent = '✓ Kopyalandı!'; b.classList.add('copied');
-    setTimeout(() => { b.textContent = '📋 Kopyala'; b.classList.remove('copied'); }, 2000);
+    const prev = b.textContent;
+    b.textContent = '✓ Copied!'; b.classList.add('copied');
+    setTimeout(() => { b.textContent = prev; b.classList.remove('copied'); }, 2000);
   });
 }
-
-document.getElementById('vinInput1').addEventListener('keydown', e => { if(e.key==='Enter') generateUniz(); });
-document.getElementById('vinInput2').addEventListener('keydown', e => { if(e.key==='Enter') generateDeepal(); });
 </script>
 </body>
 </html>
