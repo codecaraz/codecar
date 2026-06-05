@@ -5,14 +5,13 @@ export default async function handler(req, res) {
 
   const { vin, ver, mdl } = req.query;
 
+  const payload = { seed: vin, version: ver };
+  if (ver !== '3.0') payload.model = mdl;
+
   try {
-    const response = await fetch(
-      `https://turansoft.ru/api/code?vin=${encodeURIComponent(vin)}&ver=${encodeURIComponent(ver)}&mdl=${encodeURIComponent(mdl)}`,
-      { headers: { 'Referer': 'https://turansoft.ru/' } }
-    );
-    const data = await response.json();
-    return res.status(200).json(data);
-  } catch (e) {
-    return res.status(500).json({ error: 'Server xətası: ' + e.message });
-  }
-}
+    const response = await fetch('https://turansoft.ru/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Referer': 'https://turansoft.ru/',
+        '
