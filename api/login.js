@@ -1,5 +1,3 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -10,20 +8,21 @@ export default async function handler(req, res) {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
 
-  const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY
-  );
-
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('username', username)
-    .eq('password', password)
-    .eq('is_active', true)
-    .single();
-
-  if (error || !data) return res.status(401).json({ error: 'Invalid credentials' });
-
-  return res.status(200).json({ success: true, username: data.username });
+  try {
+    const response = await fetch(
+      `${process.env.SUPABASE_URL}/rest/v1/users?username=eq.${encodeURIComponent(username)}&password=eq.${encodeURIComponent(password)}&is_active=eq.true&select=username`,
+      {
+        headers: {
+          'apikey': process.env.SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    const data = await response.json();
+    if (!data || data.length === 0) return res.status(401).json({ error: 'Invalid username or password' });
+    return res.status(200).json({ success: true, username: data[0].username });
+  } catch(e) {
+    return res.status(500).json({ error: e.message });
+  }
 }
