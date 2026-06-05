@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODECAR — ADB Keygen</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f6f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  }
+
+  .header {
+    background: #ffffff;
+    padding: 2rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .brand-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #0d1b2e;
+    letter-spacing: 4px;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #9ca3af;
+    font-weight: 500;
+    margin-top: -6px;
+  }
+
+  .divider { width: 100%; height: 1px; background: #f3f4f6; margin: 4px 0; }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #374151;
+  }
+  .contact-dot { color: #d1d5db; margin: 0 4px; }
+
+  .body { padding: 1.5rem 2rem 2rem; }
+
+  .field-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .vin-row { display: flex; gap: 10px; margin-bottom: 1rem; }
+
+  .vin-row input {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .vin-row input:focus { border-color: #7b6cf6; background: #fafaff; }
+  .vin-row input::placeholder { color: #c0c4cc; letter-spacing: 0; font-family: 'Inter', sans-serif; font-size: 13px; }
+
+  .btn {
+    background: #0d1b2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 42px;
+  }
+  .btn:hover { background: #1a2e48; }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .results { display: none; flex-direction: column; gap: 12px; }
+  .results.visible { display: flex; }
+
+  .key-card {
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+
+  .kc-label {
+    font-size: 11px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block; }
+  .dot.prev { background: #f59e0b; }
+
+  .kc-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    color: #0d1b2e;
+    letter-spacing: 3px;
+    word-break: break-all;
+  }
+
+  .copy-btn {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #6b7280;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: #f3f4f6; }
+  .copy-btn.copied { color: #22c55e; border-color: #bbf7d0; background: #f0fdf4; }
+
+  .slot-info { font-size: 11px; color: #9ca3af; margin-top: 6px; }
+
+  .error-msg {
+    color: #b91c1c;
+    font-size: 13px;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: none;
+    margin-bottom: 12px;
+  }
+  .error-msg.visible { display: block; }
+
+  .footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 12px 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafafa;
+  }
+  .footer-left { font-size: 11px; color: #9ca3af; }
+  .footer-left span { color: #374151; font-weight: 600; }
+  .footer-right { font-size: 10px; color: #c0c4cc; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spin { display: inline-block; animation: spin 0.8s linear infinite; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <svg width="80" height="56" viewBox="0 0 80 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M38 6 C18 6 6 16 6 28 C6 40 18 50 38 50" stroke="url(#lg1)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M42 6 C62 6 74 16 74 28 C74 40 62 50 42 50" stroke="url(#lg2)" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <line x1="40" y1="10" x2="40" y2="46" stroke="#e084a8" stroke-width="3.5" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="lg1" x1="6" y1="6" x2="38" y2="50" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#ff6b6b"/><stop offset="1" stop-color="#e84a5f"/>
+        </linearGradient>
+        <linearGradient id="lg2" x1="74" y1="6" x2="42" y2="50" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#9b8dff"/><stop offset="1" stop-color="#7b6cf6"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="brand-name">CODECAR</div>
+    <div class="brand-sub">AUTOMOTIVE SOFTWARE</div>
+    <div class="divider"></div>
+
+    <div class="contact-row">
+      <svg width="14" height="14" fill="none" stroke="#7b6cf6" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Ülvi Rzayev</span>
+      <span class="contact-dot">•</span>
+      <svg width="14" height="14" fill="none" stroke="#7b6cf6" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 9.81a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.06 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 17z"/></svg>
+      <span>+994 70 730 77 77</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="field-label">VIN nömrəsi daxil edin (minimum 6 simvol)</div>
+    <div class="vin-row">
+      <input type="text" id="vinInput" placeholder="Məs: WBA3A5G59..." maxlength="17" />
+      <button class="btn" id="genBtn" onclick="generate()">
+        🔑 Açar al
+      </button>
+    </div>
+
+    <div class="error-msg" id="errMsg"></div>
+
+    <div class="results" id="results">
+      <div class="key-card">
+        <div class="kc-label"><span class="dot"></span> Cari açar</div>
+        <div class="kc-value" id="currentKey">—</div>
+        <button class="copy-btn" id="copyBtn1" onclick="copyKey('currentKey','copyBtn1')">📋 Kopyala</button>
+      </div>
+      <div class="key-card">
+        <div class="kc-label"><span class="dot prev"></span> Əvvəlki açar</div>
+        <div class="kc-value" id="prevKey">—</div>
+        <button class="copy-btn" id="copyBtn2" onclick="copyKey('prevKey','copyBtn2')">📋 Kopyala</button>
+      </div>
+      <div class="slot-info" id="slotInfo"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">ADB Keygen · <span>CODECAR</span></div>
+    <div class="footer-right">codecar-adb.vercel.app</div>
+  </div>
+</div>
+
+<script>
+  async function generate() {
+    const vin = document.getElementById('vinInput').value.trim().toUpperCase();
+    const btn = document.getElementById('genBtn');
+    const errMsg = document.getElementById('errMsg');
+    const results = document.getElementById('results');
+
+    errMsg.classList.remove('visible');
+    results.classList.remove('visible');
+
+    if (vin.length < 6) {
+      errMsg.textContent = 'VIN ən az 6 simvol olmalıdır.';
+      errMsg.classList.add('visible');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spin">⟳</span> Yüklənir...';
+
+    try {
+      const res = await fetch(`/api/key?vin=${encodeURIComponent(vin)}`);
+      if (!res.ok) throw new Error('Server xətası: ' + res.status);
+      const data = await res.json();
+
+      document.getElementById('currentKey').textContent = data.current || '—';
+      document.getElementById('prevKey').textContent = data.previous || '—';
+
+      if (data.slot !== undefined) {
+        document.getElementById('slotInfo').textContent = 'Zaman slotu: ' + data.slot;
+      }
+
+      results.classList.add('visible');
+    } catch (e) {
+      errMsg.textContent = 'Xəta: ' + e.message;
+      errMsg.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '🔑 Açar al';
+    }
+  }
+
+  function copyKey(id, btnId) {
+    const val = document.getElementById(id).textContent;
+    if (!val || val === '—') return;
+    navigator.clipboard.writeText(val).then(() => {
+      const btn = document.getElementById(btnId);
+      btn.textContent = '✓ Kopyalandı!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Kopyala';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  document.getElementById('vinInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') generate();
+  });
+</script>
+</body>
+</html>
