@@ -15,6 +15,20 @@
   .divider { width: 100%; height: 1px; background: #f3f4f6; margin: 6px 0; }
   .contact-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; }
   .body { padding: 1.4rem 2rem 1.8rem; }
+  .hidden { display: none !important; }
+  .field-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; font-weight: 500; }
+  .input-wrap { margin-bottom: 1rem; }
+  .input-wrap input { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
+  .input-wrap input:focus { border-color: #7b6cf6; }
+  .btn-full { background: #0d1b2e; color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; font-family: 'Inter', sans-serif; transition: background 0.2s; }
+  .btn-full:hover { background: #1a2e48; }
+  .btn-full:disabled { opacity: 0.5; cursor: not-allowed; }
+  .login-err { color: #b91c1c; font-size: 13px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; display: none; margin-top: 8px; }
+  .login-err.visible { display: block; }
+  .user-bar { display: flex; align-items: center; justify-content: space-between; background: #f5f3ff; border-radius: 10px; padding: 8px 14px; margin-bottom: 1.2rem; }
+  .user-bar span { font-size: 13px; color: #7b6cf6; font-weight: 600; }
+  .logout-btn { font-size: 11px; color: #6b7280; background: none; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+  .logout-btn:hover { background: #f3f4f6; }
   .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.4rem; }
   .model-btn { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.18s; }
   .model-btn:hover { border-color: #7b6cf6; background: #f5f3ff; }
@@ -25,15 +39,12 @@
   .gen-panel { display: none; }
   .gen-panel.active { display: block; }
   .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6; }
-  .field-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; font-weight: 500; }
   .input-row { display: flex; gap: 10px; margin-bottom: 1rem; }
   .input-row input, .sel-wrap select { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
-  .input-row input { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .input-row input { font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
   .input-row input:focus, .sel-wrap select:focus { border-color: #7b6cf6; }
-  .input-row input::placeholder { color: #c0c4cc; letter-spacing: 0; font-family: 'Inter', sans-serif; font-size: 13px; }
-  .btn { background: #0d1b2e; color: #ffffff; border: none; border-radius: 10px; padding: 0 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif; transition: background 0.2s; display: flex; align-items: center; gap: 6px; min-height: 42px; }
+  .btn { background: #0d1b2e; color: #fff; border: none; border-radius: 10px; padding: 0 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif; transition: background 0.2s; display: flex; align-items: center; gap: 6px; min-height: 42px; }
   .btn:hover { background: #1a2e48; }
-  .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .sel-wrap { margin-bottom: 1rem; }
   .results { display: none; flex-direction: column; gap: 10px; margin-top: 1rem; }
@@ -45,7 +56,7 @@
   .dot-yellow { background: #f59e0b; }
   .dot-blue { background: #3b82f6; }
   .kc-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 500; color: #0d1b2e; letter-spacing: 2px; word-break: break-all; }
-  .copy-btn { margin-top: 6px; font-size: 11px; color: #6b7280; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+  .copy-btn { margin-top: 6px; font-size: 11px; color: #6b7280; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; transition: background 0.15s; }
   .copy-btn:hover { background: #f3f4f6; }
   .copy-btn.copied { color: #22c55e; border-color: #bbf7d0; background: #f0fdf4; }
   .error-msg { color: #b91c1c; font-size: 13px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; display: none; margin-top: 8px; }
@@ -78,103 +89,167 @@
       <span>+994 70 730 77 77</span>
     </div>
   </div>
+
   <div class="body">
-    <div class="field-label">Select your vehicle model</div>
-    <div class="model-grid">
-      <div class="model-btn" onclick="selectModel('uniz',this)">
-        <div class="car-brand">Changan</div>
-        <div class="car-model">UNI-Z</div>
-      </div>
-      <div class="model-btn" onclick="selectModel('s07',this)">
-        <div class="car-brand">Deepal</div>
-        <div class="car-model">S07</div>
-      </div>
-      <div class="model-btn" onclick="selectModel('sl03',this)">
-        <div class="car-brand">Deepal</div>
-        <div class="car-model">SL03</div>
-      </div>
-      <div class="model-btn" onclick="selectModel('s07_2026',this)">
-        <div class="car-brand">Deepal</div>
-        <div class="car-model">S07 2026</div>
-      </div>
+    <!-- LOGIN PANEL -->
+    <div id="loginPanel">
+      <div class="field-label">Username</div>
+      <div class="input-wrap"><input type="text" id="loginUser" placeholder="Enter username" autocomplete="username"/></div>
+      <div class="field-label">Password</div>
+      <div class="input-wrap"><input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password"/></div>
+      <button class="btn-full" id="loginBtn" onclick="doLogin()">Sign In</button>
+      <div class="login-err" id="loginErr"></div>
     </div>
 
-    <div class="gen-panel" id="panel-uniz">
-      <div class="panel-title">Changan UNI-Z — ADB Key Generator</div>
-      <div class="field-label">Enter VIN (min. 6 characters)</div>
-      <div class="input-row">
-        <input type="text" id="vin1" placeholder="e.g. WBA3A5G59..." maxlength="17"/>
-        <button class="btn" id="btn1" onclick="generateUniz()">🔑 Get Key</button>
+    <!-- MAIN PANEL -->
+    <div id="mainPanel" class="hidden">
+      <div class="user-bar">
+        <span id="userLabel">👤 </span>
+        <button class="logout-btn" onclick="doLogout()">Sign out</button>
       </div>
-      <div class="error-msg" id="err1"></div>
-      <div class="results" id="res1">
-        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Current key</div><div class="kc-value" id="k_current">—</div><button class="copy-btn" id="cp1" onclick="copyVal('k_current','cp1')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Previous key</div><div class="kc-value" id="k_prev">—</div><button class="copy-btn" id="cp2" onclick="copyVal('k_prev','cp2')">📋 Copy</button></div>
+      <div class="field-label">Select your vehicle model</div>
+      <div class="model-grid">
+        <div class="model-btn" onclick="selectModel('uniz',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">UNI-Z</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('s07',this)">
+          <div class="car-brand">Deepal</div>
+          <div class="car-model">S07</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('sl03',this)">
+          <div class="car-brand">Deepal</div>
+          <div class="car-model">SL03</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('s07_2026',this)">
+          <div class="car-brand">Deepal</div>
+          <div class="car-model">S07 2026</div>
+        </div>
       </div>
-    </div>
 
-    <div class="gen-panel" id="panel-s07">
-      <div class="panel-title">Deepal S07 — Access Code Generator</div>
-      <div class="field-label">Firmware version</div>
-      <div class="sel-wrap"><select id="ver_s07"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
-      <div class="field-label">Last 4 digits of VIN</div>
-      <div class="input-row">
-        <input type="text" id="vin2" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
-        <button class="btn" id="btn2" onclick="generateDeepal('vin2','ver_s07','S07','res2','err2','btn2','d2')">🔑 Get Code</button>
+      <div class="gen-panel" id="panel-uniz">
+        <div class="panel-title">Changan UNI-Z — ADB Key Generator</div>
+        <div class="field-label">Enter VIN (min. 6 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin1" placeholder="e.g. WBA3A5G59..." maxlength="17"/>
+          <button class="btn" id="btn1" onclick="generateUniz()">🔑 Get Key</button>
+        </div>
+        <div class="error-msg" id="err1"></div>
+        <div class="results" id="res1">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Current key</div><div class="kc-value" id="k_current">—</div><button class="copy-btn" id="cp1" onclick="copyVal('k_current','cp1')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Previous key</div><div class="kc-value" id="k_prev">—</div><button class="copy-btn" id="cp2" onclick="copyVal('k_prev','cp2')">📋 Copy</button></div>
+        </div>
       </div>
-      <div class="error-msg" id="err2"></div>
-      <div class="results" id="res2">
-        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d2_y">—</div><button class="copy-btn" id="cp3" onclick="copyVal('d2_y','cp3')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d2_t">—</div><button class="copy-btn" id="cp4" onclick="copyVal('d2_t','cp4')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d2_tm">—</div><button class="copy-btn" id="cp5" onclick="copyVal('d2_tm','cp5')">📋 Copy</button></div>
-      </div>
-    </div>
 
-    <div class="gen-panel" id="panel-sl03">
-      <div class="panel-title">Deepal SL03 — Access Code Generator</div>
-      <div class="field-label">Firmware version</div>
-      <div class="sel-wrap"><select id="ver_sl03"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
-      <div class="field-label">Last 4 digits of VIN</div>
-      <div class="input-row">
-        <input type="text" id="vin3" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
-        <button class="btn" id="btn3" onclick="generateDeepal('vin3','ver_sl03','SL03','res3','err3','btn3','d3')">🔑 Get Code</button>
+      <div class="gen-panel" id="panel-s07">
+        <div class="panel-title">Deepal S07 — Access Code Generator</div>
+        <div class="field-label">Firmware version</div>
+        <div class="sel-wrap"><select id="ver_s07"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
+        <div class="field-label">Last 4 digits of VIN</div>
+        <div class="input-row">
+          <input type="text" id="vin2" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <button class="btn" id="btn2" onclick="generateDeepal('vin2','ver_s07','S07','res2','err2','btn2','d2')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err2"></div>
+        <div class="results" id="res2">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d2_y">—</div><button class="copy-btn" id="cp3" onclick="copyVal('d2_y','cp3')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d2_t">—</div><button class="copy-btn" id="cp4" onclick="copyVal('d2_t','cp4')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d2_tm">—</div><button class="copy-btn" id="cp5" onclick="copyVal('d2_tm','cp5')">📋 Copy</button></div>
+        </div>
       </div>
-      <div class="error-msg" id="err3"></div>
-      <div class="results" id="res3">
-        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d3_y">—</div><button class="copy-btn" id="cp6" onclick="copyVal('d3_y','cp6')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d3_t">—</div><button class="copy-btn" id="cp7" onclick="copyVal('d3_t','cp7')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d3_tm">—</div><button class="copy-btn" id="cp8" onclick="copyVal('d3_tm','cp8')">📋 Copy</button></div>
-      </div>
-    </div>
 
-    <div class="gen-panel" id="panel-s07_2026">
-      <div class="panel-title">Deepal S07 2026 — Access Code Generator</div>
-      <input type="hidden" id="ver_s07_2026" value="3.1">
-      <div class="field-label">Last 4 digits of VIN</div>
-      <div class="input-row">
-        <input type="text" id="vin4" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
-        <button class="btn" id="btn4" onclick="generateDeepal('vin4','ver_s07_2026','S07 2026','res4','err4','btn4','d4')">🔑 Get Code</button>
+      <div class="gen-panel" id="panel-sl03">
+        <div class="panel-title">Deepal SL03 — Access Code Generator</div>
+        <div class="field-label">Firmware version</div>
+        <div class="sel-wrap"><select id="ver_sl03"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
+        <div class="field-label">Last 4 digits of VIN</div>
+        <div class="input-row">
+          <input type="text" id="vin3" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <button class="btn" id="btn3" onclick="generateDeepal('vin3','ver_sl03','SL03','res3','err3','btn3','d3')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err3"></div>
+        <div class="results" id="res3">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d3_y">—</div><button class="copy-btn" id="cp6" onclick="copyVal('d3_y','cp6')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d3_t">—</div><button class="copy-btn" id="cp7" onclick="copyVal('d3_t','cp7')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d3_tm">—</div><button class="copy-btn" id="cp8" onclick="copyVal('d3_tm','cp8')">📋 Copy</button></div>
+        </div>
       </div>
-      <div class="error-msg" id="err4"></div>
-      <div class="results" id="res4">
-        <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d4_y">—</div><button class="copy-btn" id="cp9" onclick="copyVal('d4_y','cp9')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d4_t">—</div><button class="copy-btn" id="cp10" onclick="copyVal('d4_t','cp10')">📋 Copy</button></div>
-        <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d4_tm">—</div><button class="copy-btn" id="cp11" onclick="copyVal('d4_tm','cp11')">📋 Copy</button></div>
+
+      <div class="gen-panel" id="panel-s07_2026">
+        <div class="panel-title">Deepal S07 2026 — Access Code Generator</div>
+        <input type="hidden" id="ver_s07_2026" value="3.1">
+        <div class="field-label">Last 4 digits of VIN</div>
+        <div class="input-row">
+          <input type="text" id="vin4" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <button class="btn" id="btn4" onclick="generateDeepal('vin4','ver_s07_2026','S07 2026','res4','err4','btn4','d4')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err4"></div>
+        <div class="results" id="res4">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday</div><div class="kc-value" id="d4_y">—</div><button class="copy-btn" id="cp9" onclick="copyVal('d4_y','cp9')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today</div><div class="kc-value" id="d4_t">—</div><button class="copy-btn" id="cp10" onclick="copyVal('d4_t','cp10')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d4_tm">—</div><button class="copy-btn" id="cp11" onclick="copyVal('d4_tm','cp11')">📋 Copy</button></div>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="footer">
     <div class="footer-left">Code Generator · <span>CODECAR</span></div>
     <div class="footer-right">codecar-nine.vercel.app</div>
   </div>
 </div>
+
 <script>
+const SESSION_KEY = 'codecar_user';
+
+function checkSession() {
+  const user = sessionStorage.getItem(SESSION_KEY);
+  if (user) showMain(user);
+}
+
+function showMain(username) {
+  document.getElementById('loginPanel').classList.add('hidden');
+  document.getElementById('mainPanel').classList.remove('hidden');
+  document.getElementById('userLabel').textContent = '👤 ' + username;
+}
+
+function doLogout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('mainPanel').classList.add('hidden');
+  document.getElementById('loginPanel').classList.remove('hidden');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginErr');
+  err.classList.remove('visible');
+  if (!username || !password) { err.textContent = 'Please enter username and password.'; err.classList.add('visible'); return; }
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.success) throw new Error(data.error || 'Invalid credentials');
+    sessionStorage.setItem(SESSION_KEY, username);
+    showMain(username);
+  } catch(e) { err.textContent = e.message; err.classList.add('visible'); }
+  finally { btn.disabled = false; btn.textContent = 'Sign In'; }
+}
+
 function selectModel(model, el) {
   document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.gen-panel').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('panel-' + model).classList.add('active');
 }
+
 async function generateUniz() {
   const vin = document.getElementById('vin1').value.trim().toUpperCase();
   const btn = document.getElementById('btn1');
@@ -193,6 +268,7 @@ async function generateUniz() {
   } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
   finally { btn.disabled = false; btn.innerHTML = '🔑 Get Key'; }
 }
+
 async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
   const vin = document.getElementById(vinId).value.trim();
   const ver = document.getElementById(verId).value;
@@ -207,12 +283,8 @@ async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
     const data = await r.json();
     if (data.error) throw new Error(data.error);
     let y, t, tm;
-    if (data.body) {
-      const p = JSON.parse(data.body);
-      y = p.codeYesterday; t = p.codeToday || p.code; tm = p.codeTomorrow;
-    } else {
-      y = data.yesterday; t = data.today; tm = data.tomorrow;
-    }
+    if (data.body) { const p = JSON.parse(data.body); y = p.codeYesterday; t = p.codeToday || p.code; tm = p.codeTomorrow; }
+    else { y = data.yesterday; t = data.today; tm = data.tomorrow; }
     document.getElementById(prefix+'_y').textContent = y || '—';
     document.getElementById(prefix+'_t').textContent = t || '—';
     document.getElementById(prefix+'_tm').textContent = tm || '—';
@@ -220,6 +292,7 @@ async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
   } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
   finally { btn.disabled = false; btn.innerHTML = '🔑 Get Code'; }
 }
+
 function copyVal(id, btnId) {
   const val = document.getElementById(id).textContent;
   if (!val || val === '—') return;
@@ -230,6 +303,9 @@ function copyVal(id, btnId) {
     setTimeout(() => { b.textContent = prev; b.classList.remove('copied'); }, 2000);
   });
 }
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+checkSession();
 </script>
 </body>
 </html>
