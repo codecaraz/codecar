@@ -55,6 +55,8 @@
   .dot-green { background: #22c55e; }
   .dot-yellow { background: #f59e0b; }
   .dot-blue { background: #3b82f6; }
+  .dot-purple { background: #a855f7; }
+  .dot-orange { background: #f97316; }
   .kc-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 500; color: #0d1b2e; letter-spacing: 2px; word-break: break-all; }
   .copy-btn { margin-top: 6px; font-size: 11px; color: #6b7280; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; transition: background 0.15s; }
   .copy-btn:hover { background: #f3f4f6; }
@@ -125,8 +127,13 @@
           <div class="car-brand">Deepal</div>
           <div class="car-model">S07 2026</div>
         </div>
+        <div class="model-btn" onclick="selectModel('s07_v32',this)">
+          <div class="car-brand">Deepal</div>
+          <div class="car-model">S07 v3.2</div>
+        </div>
       </div>
 
+      <!-- CHANGAN UNI-Z -->
       <div class="gen-panel" id="panel-uniz">
         <div class="panel-title">Changan UNI-Z — ADB Key Generator</div>
         <div class="field-label">Enter VIN (min. 6 characters)</div>
@@ -141,6 +148,7 @@
         </div>
       </div>
 
+      <!-- DEEPAL S07 -->
       <div class="gen-panel" id="panel-s07">
         <div class="panel-title">Deepal S07 — Access Code Generator</div>
         <div class="field-label">Firmware version</div>
@@ -158,6 +166,7 @@
         </div>
       </div>
 
+      <!-- DEEPAL SL03 -->
       <div class="gen-panel" id="panel-sl03">
         <div class="panel-title">Deepal SL03 — Access Code Generator</div>
         <div class="field-label">Firmware version</div>
@@ -175,6 +184,7 @@
         </div>
       </div>
 
+      <!-- DEEPAL S07 2026 -->
       <div class="gen-panel" id="panel-s07_2026">
         <div class="panel-title">Deepal S07 2026 — Access Code Generator</div>
         <input type="hidden" id="ver_s07_2026" value="3.1">
@@ -190,6 +200,32 @@
           <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow</div><div class="kc-value" id="d4_tm">—</div><button class="copy-btn" id="cp11" onclick="copyVal('d4_tm','cp11')">📋 Copy</button></div>
         </div>
       </div>
+
+      <!-- DEEPAL S07 v3.2 — SHA256 LOCAL -->
+      <div class="gen-panel" id="panel-s07_v32">
+        <div class="panel-title">Deepal S07 v3.2 — Engineering &amp; ADB Code</div>
+        <div class="field-label">Last 6 digits of VIN</div>
+        <div class="input-row">
+          <input type="text" id="vin5" placeholder="e.g. 553259" maxlength="6" inputmode="numeric" style="text-transform:none;"/>
+          <button class="btn" id="btn5" onclick="generateS07v32()">🔑 Get Codes</button>
+        </div>
+        <div class="error-msg" id="err5"></div>
+        <div class="results" id="res5">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday — V1 Engineering</div><div class="kc-value" id="v32_y_eng1">—</div><button class="copy-btn" id="cp12" onclick="copyVal('v32_y_eng1','cp12')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday — V1 ADB</div><div class="kc-value" id="v32_y_adb1">—</div><button class="copy-btn" id="cp13" onclick="copyVal('v32_y_adb1','cp13')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday — V2 Engineering</div><div class="kc-value" id="v32_y_eng2">—</div><button class="copy-btn" id="cp14" onclick="copyVal('v32_y_eng2','cp14')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-yellow"></span> Yesterday — V2 ADB</div><div class="kc-value" id="v32_y_adb2">—</div><button class="copy-btn" id="cp15" onclick="copyVal('v32_y_adb2','cp15')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today — V1 Engineering</div><div class="kc-value" id="v32_t_eng1">—</div><button class="copy-btn" id="cp16" onclick="copyVal('v32_t_eng1','cp16')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today — V1 ADB</div><div class="kc-value" id="v32_t_adb1">—</div><button class="copy-btn" id="cp17" onclick="copyVal('v32_t_adb1','cp17')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today — V2 Engineering</div><div class="kc-value" id="v32_t_eng2">—</div><button class="copy-btn" id="cp18" onclick="copyVal('v32_t_eng2','cp18')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Today — V2 ADB</div><div class="kc-value" id="v32_t_adb2">—</div><button class="copy-btn" id="cp19" onclick="copyVal('v32_t_adb2','cp19')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow — V1 Engineering</div><div class="kc-value" id="v32_tm_eng1">—</div><button class="copy-btn" id="cp20" onclick="copyVal('v32_tm_eng1','cp20')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow — V1 ADB</div><div class="kc-value" id="v32_tm_adb1">—</div><button class="copy-btn" id="cp21" onclick="copyVal('v32_tm_adb1','cp21')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow — V2 Engineering</div><div class="kc-value" id="v32_tm_eng2">—</div><button class="copy-btn" id="cp22" onclick="copyVal('v32_tm_eng2','cp22')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-blue"></span> Tomorrow — V2 ADB</div><div class="kc-value" id="v32_tm_adb2">—</div><button class="copy-btn" id="cp23" onclick="copyVal('v32_tm_adb2','cp23')">📋 Copy</button></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -291,6 +327,82 @@ async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
     res.classList.add('visible');
   } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
   finally { btn.disabled = false; btn.innerHTML = '🔑 Get Code'; }
+}
+
+// SHA256 helper (browser native)
+async function sha256hex(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Format date as YYYYMMDD
+function fmtDate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}${m}${day}`;
+}
+
+// Deepal S07 v3.2 — 4 codes per day (V1 eng, V1 adb, V2 eng, V2 adb)
+async function codesForDay(vin6, dateStr) {
+  // V1 Engineering: SHA256("Deepal" + vin6 + dateStr), first 8 chars
+  const h1 = await sha256hex('Deepal' + vin6 + dateStr);
+  const eng1 = h1.substring(0, 8);
+
+  // V1 ADB: SHA256("adb" + vin6 + dateStr), first 8 chars
+  const h2 = await sha256hex('adb' + vin6 + dateStr);
+  const adb1 = h2.substring(0, 8);
+
+  // V2 Engineering: SHA256("Deepal2" + vin6 + dateStr), first 8 chars
+  const h3 = await sha256hex('Deepal2' + vin6 + dateStr);
+  const eng2 = h3.substring(0, 8);
+
+  // V2 ADB: SHA256("adb2" + vin6 + dateStr), first 8 chars
+  const h4 = await sha256hex('adb2' + vin6 + dateStr);
+  const adb2 = h4.substring(0, 8);
+
+  return { eng1, adb1, eng2, adb2 };
+}
+
+async function generateS07v32() {
+  const vin = document.getElementById('vin5').value.trim();
+  const btn = document.getElementById('btn5');
+  const err = document.getElementById('err5');
+  const res = document.getElementById('res5');
+  err.classList.remove('visible'); res.classList.remove('visible');
+  if (!/^\d{6}$/.test(vin)) { err.textContent = 'Please enter exactly 6 digits.'; err.classList.add('visible'); return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
+  try {
+    const now = new Date();
+    const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
+    const tomorrow = new Date(now); tomorrow.setDate(now.getDate()+1);
+
+    const [cy, ct, ctm] = await Promise.all([
+      codesForDay(vin, fmtDate(yesterday)),
+      codesForDay(vin, fmtDate(now)),
+      codesForDay(vin, fmtDate(tomorrow))
+    ]);
+
+    document.getElementById('v32_y_eng1').textContent = cy.eng1;
+    document.getElementById('v32_y_adb1').textContent = cy.adb1;
+    document.getElementById('v32_y_eng2').textContent = cy.eng2;
+    document.getElementById('v32_y_adb2').textContent = cy.adb2;
+
+    document.getElementById('v32_t_eng1').textContent = ct.eng1;
+    document.getElementById('v32_t_adb1').textContent = ct.adb1;
+    document.getElementById('v32_t_eng2').textContent = ct.eng2;
+    document.getElementById('v32_t_adb2').textContent = ct.adb2;
+
+    document.getElementById('v32_tm_eng1').textContent = ctm.eng1;
+    document.getElementById('v32_tm_adb1').textContent = ctm.adb1;
+    document.getElementById('v32_tm_eng2').textContent = ctm.eng2;
+    document.getElementById('v32_tm_adb2').textContent = ctm.adb2;
+
+    res.classList.add('visible');
+  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
+  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Codes'; }
 }
 
 function copyVal(id, btnId) {
