@@ -6,69 +6,67 @@
 <title>CODECAR — Automotive Code Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; padding: 2rem; gap: 1.5rem; }
-  .card { background: #ffffff; border: 1.5px solid #e5e7eb; border-radius: 20px; width: 100%; max-width: 480px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.08); }
-  .header { padding: 1.8rem 2rem 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 8px; border-bottom: 1px solid #f0f0f0; }
-  .brand-name { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 700; color: #0d1b2e; letter-spacing: 5px; }
-  .brand-sub { font-size: 10px; letter-spacing: 4px; color: #9ca3af; font-weight: 500; margin-top: -4px; }
-  .divider { width: 100%; height: 1px; background: #f3f4f6; margin: 6px 0; }
-  .contact-row { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #374151; }
-  .body { padding: 1.4rem 2rem 1.8rem; }
-  .hidden { display: none !important; }
-  .field-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; font-weight: 500; }
-  .input-wrap { margin-bottom: 1rem; }
-  .input-wrap input { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
-  .input-wrap input:focus { border-color: #7b6cf6; }
-  .btn-full { background: #0d1b2e; color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; font-family: 'Inter', sans-serif; transition: background 0.2s; }
-  .btn-full:hover { background: #1a2e48; }
-  .btn-full:disabled { opacity: 0.5; cursor: not-allowed; }
-  .login-err { color: #b91c1c; font-size: 13px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; display: none; margin-top: 8px; }
-  .login-err.visible { display: block; }
-  .user-bar { display: flex; align-items: center; justify-content: space-between; background: #f5f3ff; border-radius: 10px; padding: 8px 14px; margin-bottom: 1.2rem; }
-  .user-bar span { font-size: 13px; color: #7b6cf6; font-weight: 600; }
-  .logout-btn { font-size: 11px; color: #6b7280; background: none; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-  .logout-btn:hover { background: #f3f4f6; }
-  .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.4rem; }
-  .model-btn { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.18s; }
-  .model-btn:hover { border-color: #7b6cf6; background: #f5f3ff; }
-  .model-btn.active { border-color: #7b6cf6; background: #f5f3ff; }
-  .model-btn .car-brand { font-size: 10px; color: #9ca3af; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
-  .model-btn .car-model { font-size: 15px; color: #0d1b2e; font-weight: 600; }
-  .model-btn.active .car-model { color: #7b6cf6; }
-  .gen-panel { display: none; }
-  .gen-panel.active { display: block; }
-  .panel-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid #f3f4f6; }
-  .input-row { display: flex; gap: 10px; margin-bottom: 1rem; }
-  .input-row input, .sel-wrap select { font-family: 'Inter', sans-serif; font-size: 14px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; color: #111827; outline: none; transition: border-color 0.2s; width: 100%; }
-  .input-row input { font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
-  .input-row input:focus, .sel-wrap select:focus { border-color: #7b6cf6; }
-  .btn { background: #0d1b2e; color: #fff; border: none; border-radius: 10px; padding: 0 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif; transition: background 0.2s; display: flex; align-items: center; gap: 6px; min-height: 42px; }
-  .btn:hover { background: #1a2e48; }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .sel-wrap { margin-bottom: 1rem; }
-  .results { display: none; flex-direction: column; gap: 10px; margin-top: 1rem; }
-  .results.visible { display: flex; }
-  .key-card { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 12px 16px; }
-  .kc-label { font-size: 11px; color: #6b7280; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-  .dot-green { background: #22c55e; }
-  .dot-yellow { background: #f59e0b; }
-  .dot-blue { background: #3b82f6; }
-  .dot-purple { background: #a855f7; }
-  .dot-orange { background: #f97316; }
-  .kc-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 500; color: #0d1b2e; letter-spacing: 2px; word-break: break-all; }
-  .copy-btn { margin-top: 6px; font-size: 11px; color: #6b7280; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 3px 10px; cursor: pointer; transition: background 0.15s; }
-  .copy-btn:hover { background: #f3f4f6; }
-  .copy-btn.copied { color: #22c55e; border-color: #bbf7d0; background: #f0fdf4; }
-  .error-msg { color: #b91c1c; font-size: 13px; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; display: none; margin-top: 8px; }
-  .error-msg.visible { display: block; }
-  .footer { border-top: 1px solid #f0f0f0; padding: 10px 2rem; display: flex; align-items: center; justify-content: space-between; background: #fafafa; }
-  .footer-left { font-size: 11px; color: #9ca3af; }
-  .footer-left span { color: #374151; font-weight: 600; }
-  .footer-right { font-size: 10px; color: #c0c4cc; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spin { display: inline-block; animation: spin 0.8s linear infinite; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Inter',sans-serif;padding:2rem;gap:1.5rem}
+.card{background:#fff;border:1.5px solid #e5e7eb;border-radius:20px;width:100%;max-width:500px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.08)}
+.header{padding:1.8rem 2rem 1.4rem;display:flex;flex-direction:column;align-items:center;gap:8px;border-bottom:1px solid #f0f0f0}
+.brand-name{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:#0d1b2e;letter-spacing:5px}
+.brand-sub{font-size:10px;letter-spacing:4px;color:#9ca3af;font-weight:500;margin-top:-4px}
+.divider{width:100%;height:1px;background:#f3f4f6;margin:6px 0}
+.contact-row{display:flex;align-items:center;gap:6px;font-size:13px;color:#374151}
+.body{padding:1.4rem 2rem 1.8rem}
+.hidden{display:none!important}
+.field-label{font-size:12px;color:#6b7280;margin-bottom:6px;font-weight:500}
+.input-wrap{margin-bottom:1rem}
+.input-wrap input{font-family:'Inter',sans-serif;font-size:14px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 14px;color:#111827;outline:none;transition:border-color .2s;width:100%}
+.input-wrap input:focus{border-color:#7b6cf6}
+.btn-full{background:#0d1b2e;color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;width:100%;font-family:'Inter',sans-serif;transition:background .2s}
+.btn-full:hover{background:#1a2e48}
+.btn-full:disabled{opacity:.5;cursor:not-allowed}
+.login-err{color:#b91c1c;font-size:13px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;display:none;margin-top:8px}
+.login-err.visible{display:block}
+.user-bar{display:flex;align-items:center;justify-content:space-between;background:#f5f3ff;border-radius:10px;padding:8px 14px;margin-bottom:1.2rem}
+.user-bar span{font-size:13px;color:#7b6cf6;font-weight:600}
+.logout-btn{font-size:11px;color:#6b7280;background:none;border:1px solid #e5e7eb;border-radius:6px;padding:3px 10px;cursor:pointer}
+.logout-btn:hover{background:#f3f4f6}
+.model-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.4rem}
+.model-btn{background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:12px 10px;cursor:pointer;text-align:center;transition:all .18s}
+.model-btn:hover{border-color:#7b6cf6;background:#f5f3ff}
+.model-btn.active{border-color:#7b6cf6;background:#f5f3ff}
+.model-btn .car-brand{font-size:10px;color:#9ca3af;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.model-btn .car-model{font-size:15px;color:#0d1b2e;font-weight:600}
+.model-btn.active .car-model{color:#7b6cf6}
+.beta-tag{display:inline-block;font-size:9px;font-weight:700;background:#fef3c7;color:#d97706;border:1px solid #fcd34d;border-radius:4px;padding:1px 5px;margin-top:3px;letter-spacing:.5px}
+.gen-panel{display:none}
+.gen-panel.active{display:block}
+.panel-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#9ca3af;margin-bottom:1rem;padding-bottom:8px;border-bottom:1px solid #f3f4f6}
+.input-row{display:flex;gap:10px;margin-bottom:1rem}
+.input-row input,.sel-wrap select{font-family:'Inter',sans-serif;font-size:14px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:10px 14px;color:#111827;outline:none;transition:border-color .2s;width:100%}
+.input-row input{font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.input-row input:focus,.sel-wrap select:focus{border-color:#7b6cf6}
+.btn{background:#0d1b2e;color:#fff;border:none;border-radius:10px;padding:0 20px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;transition:background .2s;display:flex;align-items:center;gap:6px;min-height:42px}
+.btn:hover{background:#1a2e48}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.sel-wrap{margin-bottom:1rem}
+.results{display:none;flex-direction:column;gap:10px;margin-top:1rem}
+.results.visible{display:flex}
+.key-card{background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;padding:12px 16px}
+.kc-label{font-size:11px;color:#6b7280;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.dot-green{background:#22c55e}.dot-yellow{background:#f59e0b}.dot-blue{background:#3b82f6}.dot-purple{background:#a855f7}.dot-orange{background:#f97316}
+.kc-value{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:500;color:#0d1b2e;letter-spacing:2px;word-break:break-all}
+.copy-btn{margin-top:6px;font-size:11px;color:#6b7280;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:3px 10px;cursor:pointer;transition:background .15s}
+.copy-btn:hover{background:#f3f4f6}
+.copy-btn.copied{color:#22c55e;border-color:#bbf7d0;background:#f0fdf4}
+.error-msg{color:#b91c1c;font-size:13px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:10px 14px;display:none;margin-top:8px}
+.error-msg.visible{display:block}
+.info-msg{color:#1d4ed8;font-size:12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 14px;margin-bottom:10px}
+.footer{border-top:1px solid #f0f0f0;padding:10px 2rem;display:flex;align-items:center;justify-content:space-between;background:#fafafa}
+.footer-left{font-size:11px;color:#9ca3af}
+.footer-left span{color:#374151;font-weight:600}
+.footer-right{font-size:10px;color:#c0c4cc}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;animation:spin .8s linear infinite}
 </style>
 </head>
 <body>
@@ -93,7 +91,7 @@
   </div>
 
   <div class="body">
-    <!-- LOGIN PANEL -->
+    <!-- LOGIN -->
     <div id="loginPanel">
       <div class="field-label">Username</div>
       <div class="input-wrap"><input type="text" id="loginUser" placeholder="Enter username" autocomplete="username"/></div>
@@ -103,7 +101,7 @@
       <div class="login-err" id="loginErr"></div>
     </div>
 
-    <!-- MAIN PANEL -->
+    <!-- MAIN -->
     <div id="mainPanel" class="hidden">
       <div class="user-bar">
         <span id="userLabel">👤 </span>
@@ -131,9 +129,34 @@
           <div class="car-brand">Deepal</div>
           <div class="car-model">S07 v3.2</div>
         </div>
+        <div class="model-btn" onclick="selectModel('uniz_2026',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">UNI-Z 2026</div>
+          <div class="beta-tag">⛽ BENZİN</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('cs55',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">CS55 Plus</div>
+          <div class="beta-tag">⛽ BENZİN</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('univ',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">UNI-V</div>
+          <div class="beta-tag">⛽ BENZİN</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('q05',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">Q05</div>
+          <div class="beta-tag">⛽ BENZİN</div>
+        </div>
+        <div class="model-btn" onclick="selectModel('cs75',this)">
+          <div class="car-brand">Changan</div>
+          <div class="car-model">CS75 PRO</div>
+          <div class="beta-tag">⛽ BENZİN</div>
+        </div>
       </div>
 
-      <!-- CHANGAN UNI-Z -->
+      <!-- CHANGAN UNI-Z (köhnə) -->
       <div class="gen-panel" id="panel-uniz">
         <div class="panel-title">Changan UNI-Z — ADB Key Generator</div>
         <div class="field-label">Enter VIN (min. 6 characters)</div>
@@ -155,7 +178,7 @@
         <div class="sel-wrap"><select id="ver_s07"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
         <div class="field-label">Last 4 digits of VIN</div>
         <div class="input-row">
-          <input type="text" id="vin2" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <input type="text" id="vin2" placeholder="e.g. 3535" maxlength="4" inputmode="numeric"/>
           <button class="btn" id="btn2" onclick="generateDeepal('vin2','ver_s07','S07','res2','err2','btn2','d2')">🔑 Get Code</button>
         </div>
         <div class="error-msg" id="err2"></div>
@@ -173,7 +196,7 @@
         <div class="sel-wrap"><select id="ver_sl03"><option value="3.1">3.1 and above</option><option value="3.0">Below 3.0</option></select></div>
         <div class="field-label">Last 4 digits of VIN</div>
         <div class="input-row">
-          <input type="text" id="vin3" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <input type="text" id="vin3" placeholder="e.g. 3535" maxlength="4" inputmode="numeric"/>
           <button class="btn" id="btn3" onclick="generateDeepal('vin3','ver_sl03','SL03','res3','err3','btn3','d3')">🔑 Get Code</button>
         </div>
         <div class="error-msg" id="err3"></div>
@@ -190,7 +213,7 @@
         <input type="hidden" id="ver_s07_2026" value="3.1">
         <div class="field-label">Last 4 digits of VIN</div>
         <div class="input-row">
-          <input type="text" id="vin4" placeholder="e.g. 3535" maxlength="4" inputmode="numeric" style="text-transform:none;"/>
+          <input type="text" id="vin4" placeholder="e.g. 3535" maxlength="4" inputmode="numeric"/>
           <button class="btn" id="btn4" onclick="generateDeepal('vin4','ver_s07_2026','S07 2026','res4','err4','btn4','d4')">🔑 Get Code</button>
         </div>
         <div class="error-msg" id="err4"></div>
@@ -201,12 +224,12 @@
         </div>
       </div>
 
-      <!-- DEEPAL S07 v3.2 — SHA256 LOCAL -->
+      <!-- DEEPAL S07 v3.2 -->
       <div class="gen-panel" id="panel-s07_v32">
         <div class="panel-title">Deepal S07 v3.2 — Engineering &amp; ADB Code</div>
         <div class="field-label">Last 6 digits of VIN</div>
         <div class="input-row">
-          <input type="text" id="vin5" placeholder="e.g. 553259" maxlength="6" inputmode="numeric" style="text-transform:none;"/>
+          <input type="text" id="vin5" placeholder="e.g. 553259" maxlength="6" inputmode="numeric"/>
           <button class="btn" id="btn5" onclick="generateS07v32()">🔑 Get Codes</button>
         </div>
         <div class="error-msg" id="err5"></div>
@@ -226,6 +249,82 @@
         </div>
       </div>
 
+      <!-- CHANGAN UNI-Z 2026 / CS55 Plus / UNI-V / Q05 / CS75 PRO — VIN lookup -->
+      <div class="gen-panel" id="panel-uniz_2026">
+        <div class="panel-title">Changan UNI-Z 2026 — Engineering Code</div>
+        <div class="info-msg">⛽ <b>Benzin modeli</b> — yalnız benzin versiyaları üçün nəzərdə tutulub.<br>📱 Tam 17 simvollu VIN daxil edin. Kod formatı: <b>*#XXXXXXXX*#</b></div>
+        <div class="field-label">Full VIN (17 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin_uniz2026" placeholder="e.g. LS5A3DKE7TA221067" maxlength="17" style="text-transform:uppercase"/>
+          <button class="btn" id="btn_uniz2026" onclick="lookupVin('vin_uniz2026','res_uniz2026','err_uniz2026','btn_uniz2026','uniz2026_code','uniz2026_dial')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err_uniz2026"></div>
+        <div class="results" id="res_uniz2026">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Engineering Code</div><div class="kc-value" id="uniz2026_code">—</div><button class="copy-btn" id="cp_uniz2026" onclick="copyVal('uniz2026_code','cp_uniz2026')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-purple"></span> Dial Code</div><div class="kc-value" id="uniz2026_dial" style="font-size:14px">—</div><button class="copy-btn" id="cp_uniz2026d" onclick="copyVal('uniz2026_dial','cp_uniz2026d')">📋 Copy</button></div>
+        </div>
+      </div>
+
+      <div class="gen-panel" id="panel-cs55">
+        <div class="panel-title">Changan CS55 Plus — Engineering Code</div>
+        <div class="info-msg">⛽ <b>Benzin modeli</b> — yalnız benzin versiyaları üçün.<br>📱 Köhnə firmware: <b>*#*#888</b> → şifrə <b>369875</b><br>Yeni 2026: Tam VIN ilə kod aşağıda</div>
+        <div class="field-label">Full VIN (17 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin_cs55" placeholder="e.g. LS5A3DKE7TA221067" maxlength="17" style="text-transform:uppercase"/>
+          <button class="btn" id="btn_cs55" onclick="lookupVin('vin_cs55','res_cs55','err_cs55','btn_cs55','cs55_code','cs55_dial')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err_cs55"></div>
+        <div class="results" id="res_cs55">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Engineering Code</div><div class="kc-value" id="cs55_code">—</div><button class="copy-btn" id="cp_cs55" onclick="copyVal('cs55_code','cp_cs55')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-purple"></span> Dial Code</div><div class="kc-value" id="cs55_dial" style="font-size:14px">—</div><button class="copy-btn" id="cp_cs55d" onclick="copyVal('cs55_dial','cp_cs55d')">📋 Copy</button></div>
+        </div>
+      </div>
+
+      <div class="gen-panel" id="panel-univ">
+        <div class="panel-title">Changan UNI-V — Engineering Code</div>
+        <div class="info-msg">⛽ <b>Benzin modeli</b> — yalnız benzin versiyaları üçün.<br>📱 Köhnə firmware: <b>*#*#888</b> → şifrə <b>369875</b><br>Yeni 2026: Tam VIN ilə kod aşağıda</div>
+        <div class="field-label">Full VIN (17 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin_univ" placeholder="e.g. LS5A3DKE7TA221067" maxlength="17" style="text-transform:uppercase"/>
+          <button class="btn" id="btn_univ" onclick="lookupVin('vin_univ','res_univ','err_univ','btn_univ','univ_code','univ_dial')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err_univ"></div>
+        <div class="results" id="res_univ">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Engineering Code</div><div class="kc-value" id="univ_code">—</div><button class="copy-btn" id="cp_univ" onclick="copyVal('univ_code','cp_univ')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-purple"></span> Dial Code</div><div class="kc-value" id="univ_dial" style="font-size:14px">—</div><button class="copy-btn" id="cp_univd" onclick="copyVal('univ_dial','cp_univd')">📋 Copy</button></div>
+        </div>
+      </div>
+
+      <div class="gen-panel" id="panel-q05">
+        <div class="panel-title">Changan Q05 — Engineering Code</div>
+        <div class="info-msg">⛽ <b>Benzin modeli</b> — yalnız benzin versiyaları üçün.<br>📱 Tam 17 simvollu VIN daxil edin</div>
+        <div class="field-label">Full VIN (17 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin_q05" placeholder="e.g. LS5A3DKE7TA221067" maxlength="17" style="text-transform:uppercase"/>
+          <button class="btn" id="btn_q05" onclick="lookupVin('vin_q05','res_q05','err_q05','btn_q05','q05_code','q05_dial')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err_q05"></div>
+        <div class="results" id="res_q05">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Engineering Code</div><div class="kc-value" id="q05_code">—</div><button class="copy-btn" id="cp_q05" onclick="copyVal('q05_code','cp_q05')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-purple"></span> Dial Code</div><div class="kc-value" id="q05_dial" style="font-size:14px">—</div><button class="copy-btn" id="cp_q05d" onclick="copyVal('q05_dial','cp_q05d')">📋 Copy</button></div>
+        </div>
+      </div>
+
+      <div class="gen-panel" id="panel-cs75">
+        <div class="panel-title">Changan CS75 PRO — Engineering Code</div>
+        <div class="info-msg">⛽ <b>Benzin modeli</b> — yalnız benzin versiyaları üçün.<br>📱 Köhnə firmware: <b>*#*#888</b> → şifrə <b>369875</b><br>Yeni 2026: Tam VIN ilə kod aşağıda</div>
+        <div class="field-label">Full VIN (17 characters)</div>
+        <div class="input-row">
+          <input type="text" id="vin_cs75" placeholder="e.g. LS5A3DKE7TA221067" maxlength="17" style="text-transform:uppercase"/>
+          <button class="btn" id="btn_cs75" onclick="lookupVin('vin_cs75','res_cs75','err_cs75','btn_cs75','cs75_code','cs75_dial')">🔑 Get Code</button>
+        </div>
+        <div class="error-msg" id="err_cs75"></div>
+        <div class="results" id="res_cs75">
+          <div class="key-card"><div class="kc-label"><span class="dot dot-green"></span> Engineering Code</div><div class="kc-value" id="cs75_code">—</div><button class="copy-btn" id="cp_cs75" onclick="copyVal('cs75_code','cp_cs75')">📋 Copy</button></div>
+          <div class="key-card"><div class="kc-label"><span class="dot dot-purple"></span> Dial Code</div><div class="kc-value" id="cs75_dial" style="font-size:14px">—</div><button class="copy-btn" id="cp_cs75d" onclick="copyVal('cs75_dial','cp_cs75d')">📋 Copy</button></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -236,187 +335,152 @@
 </div>
 
 <script>
-const SESSION_KEY = 'codecar_user';
+const SESSION_KEY='codecar_user';
 
-function checkSession() {
-  const user = sessionStorage.getItem(SESSION_KEY);
-  if (user) showMain(user);
-}
+function checkSession(){const u=sessionStorage.getItem(SESSION_KEY);if(u)showMain(u)}
+function showMain(u){document.getElementById('loginPanel').classList.add('hidden');document.getElementById('mainPanel').classList.remove('hidden');document.getElementById('userLabel').textContent='👤 '+u}
+function doLogout(){sessionStorage.removeItem(SESSION_KEY);document.getElementById('mainPanel').classList.add('hidden');document.getElementById('loginPanel').classList.remove('hidden');document.getElementById('loginUser').value='';document.getElementById('loginPass').value=''}
 
-function showMain(username) {
-  document.getElementById('loginPanel').classList.add('hidden');
-  document.getElementById('mainPanel').classList.remove('hidden');
-  document.getElementById('userLabel').textContent = '👤 ' + username;
-}
-
-function doLogout() {
-  sessionStorage.removeItem(SESSION_KEY);
-  document.getElementById('mainPanel').classList.add('hidden');
-  document.getElementById('loginPanel').classList.remove('hidden');
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-}
-
-async function doLogin() {
-  const username = document.getElementById('loginUser').value.trim();
-  const password = document.getElementById('loginPass').value;
-  const btn = document.getElementById('loginBtn');
-  const err = document.getElementById('loginErr');
+async function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginErr');
   err.classList.remove('visible');
-  if (!username || !password) { err.textContent = 'Please enter username and password.'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.textContent = 'Signing in...';
-  try {
-    const r = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-    const data = await r.json();
-    if (!r.ok || !data.success) throw new Error(data.error || 'Invalid credentials');
-    sessionStorage.setItem(SESSION_KEY, username);
-    showMain(username);
-  } catch(e) { err.textContent = e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.textContent = 'Sign In'; }
+  if(!u||!p){err.textContent='Please enter username and password.';err.classList.add('visible');return}
+  btn.disabled=true;btn.textContent='Signing in...';
+  try{
+    const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+    const d=await r.json();
+    if(!r.ok||!d.success)throw new Error(d.error||'Invalid credentials');
+    sessionStorage.setItem(SESSION_KEY,u);showMain(u);
+  }catch(e){err.textContent=e.message;err.classList.add('visible');}
+  finally{btn.disabled=false;btn.textContent='Sign In'}
 }
 
-function selectModel(model, el) {
-  document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.gen-panel').forEach(p => p.classList.remove('active'));
+function selectModel(m,el){
+  document.querySelectorAll('.model-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.gen-panel').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('panel-' + model).classList.add('active');
+  document.getElementById('panel-'+m).classList.add('active');
 }
 
-async function generateUniz() {
-  const vin = document.getElementById('vin1').value.trim().toUpperCase();
-  const btn = document.getElementById('btn1');
-  const err = document.getElementById('err1');
-  const res = document.getElementById('res1');
-  err.classList.remove('visible'); res.classList.remove('visible');
-  if (vin.length < 6) { err.textContent = 'VIN must be at least 6 characters.'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
-  try {
-    const r = await fetch(`/api/key?vin=${encodeURIComponent(vin)}`);
-    if (!r.ok) throw new Error('Server error: ' + r.status);
-    const data = await r.json();
-    document.getElementById('k_current').textContent = data.current || '—';
-    document.getElementById('k_prev').textContent = data.previous || '—';
+async function generateUniz(){
+  const vin=document.getElementById('vin1').value.trim().toUpperCase();
+  const btn=document.getElementById('btn1');
+  const err=document.getElementById('err1');
+  const res=document.getElementById('res1');
+  err.classList.remove('visible');res.classList.remove('visible');
+  if(vin.length<6){err.textContent='VIN must be at least 6 characters.';err.classList.add('visible');return}
+  btn.disabled=true;btn.innerHTML='<span class="spin">⟳</span>';
+  try{
+    const r=await fetch('/api/key?vin='+encodeURIComponent(vin));
+    if(!r.ok)throw new Error('Server error: '+r.status);
+    const d=await r.json();
+    document.getElementById('k_current').textContent=d.current||'—';
+    document.getElementById('k_prev').textContent=d.previous||'—';
     res.classList.add('visible');
-  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Key'; }
+  }catch(e){err.textContent='Error: '+e.message;err.classList.add('visible');}
+  finally{btn.disabled=false;btn.innerHTML='🔑 Get Key'}
 }
 
-async function generateDeepal(vinId, verId, mdl, resId, errId, btnId, prefix) {
-  const vin = document.getElementById(vinId).value.trim();
-  const ver = document.getElementById(verId).value;
-  const btn = document.getElementById(btnId);
-  const err = document.getElementById(errId);
-  const res = document.getElementById(resId);
-  err.classList.remove('visible'); res.classList.remove('visible');
-  if (!/^\d{4}$/.test(vin)) { err.textContent = 'Please enter exactly 4 digits (0-9).'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
-  try {
-    const r = await fetch(`/api/deepal?vin=${encodeURIComponent(vin)}&ver=${encodeURIComponent(ver)}&mdl=${encodeURIComponent(mdl)}`);
-    const data = await r.json();
-    if (data.error) throw new Error(data.error);
-    let y, t, tm;
-    if (data.body) { const p = JSON.parse(data.body); y = p.codeYesterday; t = p.codeToday || p.code; tm = p.codeTomorrow; }
-    else { y = data.yesterday; t = data.today; tm = data.tomorrow; }
-    document.getElementById(prefix+'_y').textContent = y || '—';
-    document.getElementById(prefix+'_t').textContent = t || '—';
-    document.getElementById(prefix+'_tm').textContent = tm || '—';
+async function generateDeepal(vinId,verId,mdl,resId,errId,btnId,prefix){
+  const vin=document.getElementById(vinId).value.trim();
+  const ver=document.getElementById(verId).value;
+  const btn=document.getElementById(btnId);
+  const err=document.getElementById(errId);
+  const res=document.getElementById(resId);
+  err.classList.remove('visible');res.classList.remove('visible');
+  if(!/^\d{4}$/.test(vin)){err.textContent='Please enter exactly 4 digits.';err.classList.add('visible');return}
+  btn.disabled=true;btn.innerHTML='<span class="spin">⟳</span>';
+  try{
+    const r=await fetch('/api/deepal?vin='+encodeURIComponent(vin)+'&ver='+encodeURIComponent(ver)+'&mdl='+encodeURIComponent(mdl));
+    const d=await r.json();
+    if(d.error)throw new Error(d.error);
+    let y,t,tm;
+    if(d.body){const p=JSON.parse(d.body);y=p.codeYesterday;t=p.codeToday||p.code;tm=p.codeTomorrow}
+    else{y=d.yesterday;t=d.today;tm=d.tomorrow}
+    document.getElementById(prefix+'_y').textContent=y||'—';
+    document.getElementById(prefix+'_t').textContent=t||'—';
+    document.getElementById(prefix+'_tm').textContent=tm||'—';
     res.classList.add('visible');
-  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Code'; }
+  }catch(e){err.textContent='Error: '+e.message;err.classList.add('visible');}
+  finally{btn.disabled=false;btn.innerHTML='🔑 Get Code'}
 }
 
-// SHA256 helper (browser native)
-async function sha256hex(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+async function sha256hex(msg){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-
-// Format date as YYYYMMDD
-function fmtDate(d) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const day = String(d.getDate()).padStart(2,'0');
-  return `${y}${m}${day}`;
+function fmtDate(d){return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')}
+async function codesForDay(vin6,ds){
+  const h1=await sha256hex('Deepal'+vin6+ds);
+  const h2=await sha256hex('adb'+vin6+ds);
+  const h3=await sha256hex('Deepal2'+vin6+ds);
+  const h4=await sha256hex('adb2'+vin6+ds);
+  return{eng1:h1.substring(0,8),adb1:h2.substring(0,8),eng2:h3.substring(0,8),adb2:h4.substring(0,8)}
 }
-
-// Deepal S07 v3.2 — 4 codes per day (V1 eng, V1 adb, V2 eng, V2 adb)
-async function codesForDay(vin6, dateStr) {
-  // V1 Engineering: SHA256("Deepal" + vin6 + dateStr), first 8 chars
-  const h1 = await sha256hex('Deepal' + vin6 + dateStr);
-  const eng1 = h1.substring(0, 8);
-
-  // V1 ADB: SHA256("adb" + vin6 + dateStr), first 8 chars
-  const h2 = await sha256hex('adb' + vin6 + dateStr);
-  const adb1 = h2.substring(0, 8);
-
-  // V2 Engineering: SHA256("Deepal2" + vin6 + dateStr), first 8 chars
-  const h3 = await sha256hex('Deepal2' + vin6 + dateStr);
-  const eng2 = h3.substring(0, 8);
-
-  // V2 ADB: SHA256("adb2" + vin6 + dateStr), first 8 chars
-  const h4 = await sha256hex('adb2' + vin6 + dateStr);
-  const adb2 = h4.substring(0, 8);
-
-  return { eng1, adb1, eng2, adb2 };
-}
-
-async function generateS07v32() {
-  const vin = document.getElementById('vin5').value.trim();
-  const btn = document.getElementById('btn5');
-  const err = document.getElementById('err5');
-  const res = document.getElementById('res5');
-  err.classList.remove('visible'); res.classList.remove('visible');
-  if (!/^\d{6}$/.test(vin)) { err.textContent = 'Please enter exactly 6 digits.'; err.classList.add('visible'); return; }
-  btn.disabled = true; btn.innerHTML = '<span class="spin">⟳</span> Loading...';
-  try {
-    const now = new Date();
-    const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
-    const tomorrow = new Date(now); tomorrow.setDate(now.getDate()+1);
-
-    const [cy, ct, ctm] = await Promise.all([
-      codesForDay(vin, fmtDate(yesterday)),
-      codesForDay(vin, fmtDate(now)),
-      codesForDay(vin, fmtDate(tomorrow))
-    ]);
-
-    document.getElementById('v32_y_eng1').textContent = cy.eng1;
-    document.getElementById('v32_y_adb1').textContent = cy.adb1;
-    document.getElementById('v32_y_eng2').textContent = cy.eng2;
-    document.getElementById('v32_y_adb2').textContent = cy.adb2;
-
-    document.getElementById('v32_t_eng1').textContent = ct.eng1;
-    document.getElementById('v32_t_adb1').textContent = ct.adb1;
-    document.getElementById('v32_t_eng2').textContent = ct.eng2;
-    document.getElementById('v32_t_adb2').textContent = ct.adb2;
-
-    document.getElementById('v32_tm_eng1').textContent = ctm.eng1;
-    document.getElementById('v32_tm_adb1').textContent = ctm.adb1;
-    document.getElementById('v32_tm_eng2').textContent = ctm.eng2;
-    document.getElementById('v32_tm_adb2').textContent = ctm.adb2;
-
+async function generateS07v32(){
+  const vin=document.getElementById('vin5').value.trim();
+  const btn=document.getElementById('btn5');
+  const err=document.getElementById('err5');
+  const res=document.getElementById('res5');
+  err.classList.remove('visible');res.classList.remove('visible');
+  if(!/^\d{6}$/.test(vin)){err.textContent='Please enter exactly 6 digits.';err.classList.add('visible');return}
+  btn.disabled=true;btn.innerHTML='<span class="spin">⟳</span>';
+  try{
+    const now=new Date();
+    const y=new Date(now);y.setDate(now.getDate()-1);
+    const tm=new Date(now);tm.setDate(now.getDate()+1);
+    const[cy,ct,ctm]=await Promise.all([codesForDay(vin,fmtDate(y)),codesForDay(vin,fmtDate(now)),codesForDay(vin,fmtDate(tm))]);
+    document.getElementById('v32_y_eng1').textContent=cy.eng1;document.getElementById('v32_y_adb1').textContent=cy.adb1;
+    document.getElementById('v32_y_eng2').textContent=cy.eng2;document.getElementById('v32_y_adb2').textContent=cy.adb2;
+    document.getElementById('v32_t_eng1').textContent=ct.eng1;document.getElementById('v32_t_adb1').textContent=ct.adb1;
+    document.getElementById('v32_t_eng2').textContent=ct.eng2;document.getElementById('v32_t_adb2').textContent=ct.adb2;
+    document.getElementById('v32_tm_eng1').textContent=ctm.eng1;document.getElementById('v32_tm_adb1').textContent=ctm.adb1;
+    document.getElementById('v32_tm_eng2').textContent=ctm.eng2;document.getElementById('v32_tm_adb2').textContent=ctm.adb2;
     res.classList.add('visible');
-  } catch(e) { err.textContent = 'Error: ' + e.message; err.classList.add('visible'); }
-  finally { btn.disabled = false; btn.innerHTML = '🔑 Get Codes'; }
+  }catch(e){err.textContent='Error: '+e.message;err.classList.add('visible');}
+  finally{btn.disabled=false;btn.innerHTML='🔑 Get Codes'}
 }
 
-function copyVal(id, btnId) {
-  const val = document.getElementById(id).textContent;
-  if (!val || val === '—') return;
-  navigator.clipboard.writeText(val).then(() => {
-    const b = document.getElementById(btnId);
-    const prev = b.textContent;
-    b.textContent = '✓ Copied!'; b.classList.add('copied');
-    setTimeout(() => { b.textContent = prev; b.classList.remove('copied'); }, 2000);
+// VIN lookup for new 2026 models
+async function lookupVin(vinId,resId,errId,btnId,codeId,dialId){
+  const vin=document.getElementById(vinId).value.trim().toUpperCase();
+  const btn=document.getElementById(btnId);
+  const err=document.getElementById(errId);
+  const res=document.getElementById(resId);
+  err.classList.remove('visible');res.classList.remove('visible');
+  if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)){err.textContent='VIN 17 simvol olmalıdır (I, O, Q istifadə edilmir).';err.classList.add('visible');return}
+  btn.disabled=true;btn.innerHTML='<span class="spin">⟳</span>';
+  try{
+    const r=await fetch('/api/vin-lookup?vin='+encodeURIComponent(vin));
+    const d=await r.json();
+    if(d.error)throw new Error(d.error);
+    if(d.code){
+      document.getElementById(codeId).textContent=d.code;
+      document.getElementById(dialId).textContent='*#'+d.code+'*#';
+      res.classList.add('visible');
+    } else {
+      err.textContent='Bu VIN üçün kod tapılmadı. Zəhmət olmasa +994 70 730 77 77 ilə əlaqə saxlayın.';
+      err.classList.add('visible');
+    }
+  }catch(e){err.textContent='Xəta: '+e.message;err.classList.add('visible');}
+  finally{btn.disabled=false;btn.innerHTML='🔑 Get Code'}
+}
+
+function copyVal(id,btnId){
+  const v=document.getElementById(id).textContent;
+  if(!v||v==='—')return;
+  navigator.clipboard.writeText(v).then(()=>{
+    const b=document.getElementById(btnId);
+    const prev=b.textContent;
+    b.textContent='✓ Copied!';b.classList.add('copied');
+    setTimeout(()=>{b.textContent=prev;b.classList.remove('copied')},2000);
   });
 }
 
-document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 checkSession();
 </script>
 </body>
